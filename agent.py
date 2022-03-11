@@ -52,6 +52,9 @@ class Agent:
             (dir_r and game.is_collision(point_u)) or 
             (dir_l and game.is_collision(point_d)),
             
+            # Danger Probablity Alert
+            #TODO;
+            
             # Move direction
             dir_l,
             dir_r,

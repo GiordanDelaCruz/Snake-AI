@@ -52,7 +52,10 @@ class SnakeGameAI:
         self._place_food()
         self.frame_iteration = 0
         self.frame_timeout_period = 0        # Restart frame_timeout_period
-
+        self.frame_1_danger = -1             # Restart frame_1_danger
+        self.flag_frame_1_danger == False    
+        self.frame_2_danger = -1             # Restart frame_2_danger
+        self.flag_frame_2_danger == False
 
     def _place_food(self):
         x = random.randint(0, (self.w-BLOCK_SIZE )//BLOCK_SIZE )*BLOCK_SIZE
@@ -72,10 +75,22 @@ class SnakeGameAI:
                 pygame.quit()
                 quit()
         
-        # 2. move
+        # 2.1 move
         self._move(action) # update the head
-        self.snake.insert(0, self.head)
         
+        # 2.2 check danger probability alert
+        # frame_1_danger_alert
+        if self._is_danger_alert() and self.flag_frame_1_danger == False:
+            self.frame_1_danger = self.frame_iteration
+            self.flag_frame_1_danger == True
+        # frame_2_danger_alert
+        if self.flag_frame_1_danger == True:
+            if self._is_danger_alert():
+                self.frame_2_danger = self.frame_iteration
+                self.flag_frame_2_danger == True
+        # Release frame_1_danger_alert & frame_2_danger_alert after snake is safe
+        #TODO;
+
         # 3. check if game over
         reward = 0
         game_over = False
@@ -118,6 +133,9 @@ class SnakeGameAI:
         if pt is None:
             pt = self.head
         # hits boundary
+        if pt.x > self.w - BLOCK_SIZE or pt.x < 0 or pt.y > self.h - BLOCK_SIZE or pt.y < 0:
+            return True
+        # near boundry
         if pt.x > self.w - BLOCK_SIZE or pt.x < 0 or pt.y > self.h - BLOCK_SIZE or pt.y < 0:
             return True
         # hits itself
@@ -170,3 +188,9 @@ class SnakeGameAI:
             y -= BLOCK_SIZE
 
         self.head = Point(x, y)
+
+    def _is_danger_alert(self, pt=None):
+
+        # beside boundary
+        if pt.x == self.w - (BLOCK_SIZE + 1) or pt.x == 1 or pt.y == self.h - (BLOCK_SIZE + 1) or pt.y == 0:
+            return True
