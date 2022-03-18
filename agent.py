@@ -17,7 +17,7 @@ class Agent:
         self.epsilon = 0 # randomness
         self.gamma = 0.9 # discount rate
         self.memory = deque(maxlen=MAX_MEMORY) # popleft()
-        self.model = Linear_QNet(11, 256, 3)
+        self.model = Linear_QNet(12, 256, 3)
         self.trainer = QTrainer(self.model, lr=LR, gamma=self.gamma)
 
 
@@ -53,7 +53,7 @@ class Agent:
             (dir_l and game.is_collision(point_d)),
             
             # Danger Probablity Alert
-            #TODO;
+            game.flag_frame_1_danger and game.flag_frame_2_danger,
             
             # Move direction
             dir_l,

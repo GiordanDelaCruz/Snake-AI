@@ -88,6 +88,8 @@ class SnakeGameAI:
             if self._is_danger_alert():
                 self.frame_2_danger = self.frame_iteration
                 self.flag_frame_2_danger == True
+        # Calculate number of moves until snake is safe
+        moves_till_safe = len(self.snake) - ((self.frame_iteration - self.frame_2_danger) - (self.frame_iteration - self.frame_1_danger)) + 1
         # Release frame_1_danger_alert & frame_2_danger_alert after snake is safe
         #TODO;
 
@@ -194,3 +196,7 @@ class SnakeGameAI:
         # beside boundary
         if pt.x == self.w - (BLOCK_SIZE + 1) or pt.x == 1 or pt.y == self.h - (BLOCK_SIZE + 1) or pt.y == 0:
             return True
+
+    def _calculate_area(self):
+        # Area = width / block_size
+        pass
