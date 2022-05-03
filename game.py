@@ -24,7 +24,7 @@ BLUE2 = (0, 100, 255)
 BLACK = (0,0,0)
 
 BLOCK_SIZE = 20
-SPEED = 400 # Original speed = 40
+SPEED = 4000000 # Original speed = 40
 
 class SnakeGameAI:
 
@@ -35,8 +35,10 @@ class SnakeGameAI:
         self.display = pygame.display.set_mode((self.w, self.h))
         pygame.display.set_caption('Snake')
         self.clock = pygame.time.Clock()
+        self.total_iteration = 0
+        self.frame_iteration = 0
+        self.max_iteration = 0
         self.reset()
-
 
     def reset(self):
         # init game state
@@ -88,7 +90,7 @@ class SnakeGameAI:
 
         # 3.2 timeout strategy
         p_steps = ( 0.7*len(self.snake) ) + 10
-        print("Frame Iteration = {f}, P steps = {p}".format( p = p_steps, f = self.frame_timeout_period ))
+        # print("Frame Iteration = {f}, P steps = {p}".format( p = p_steps, f = self.frame_timeout_period ))
         if self.frame_timeout_period > p_steps:
             reward = -0.5 / len(self.snake)
 
