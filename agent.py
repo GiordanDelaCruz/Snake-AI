@@ -138,14 +138,14 @@ def train():
             total_score += score
             mean_score = total_score / agent.n_games
 
-            # print('Game', agent.n_games, 'Score', score, 'Record:', record, 'Mean score', mean_score)
+            print('Game', agent.n_games, 'Score', score, 'Record:', record, 'Mean score', mean_score)
             # print('Max steps', game.max_iteration, 'Average steps', game.total_iteration / agent.n_games)
 
             plot_mean_scores.append(mean_score)
 
-            if agent.n_games == 250:
-                title = 'Results'
-                f = open(f'results/{title}.txt', 'w')
+            if agent.n_games ==250:
+                title = 'Combination 3 - test#4'
+                f = open(f'results/Combination 3/{title}.txt', 'w')
                 f.write(f'{agent.n_games}\n{record}\n{mean_score}\n{game.max_iteration}\n{game.total_iteration / agent.n_games}\n')
                 f.write(",".join([str(i) for i in plot_scores]))
                 f.close()
